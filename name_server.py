@@ -18,5 +18,12 @@ async def gestioneNome(reader, writer):
             line = await reader.readline()
             if not line:
                 break
+            try:
+                data = json.loads(line.decode())
+                if data.get("cmd")== "lookup":
+                    servizio=data.get("servizio")
+
+
+
 
 
