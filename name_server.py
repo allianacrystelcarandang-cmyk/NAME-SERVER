@@ -31,6 +31,9 @@ async def gestioneNome(reader, writer):
                 else:
                     risposta={"stato":"errore", "messaggio":"comando non esistente"}
 
+            except (json.decoder.JSONDecodeError,UnicodeDecodeError):
+                risposta={"stato":"errore", "messaggio":"json non valido"}
+
 
 
 
