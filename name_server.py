@@ -28,6 +28,8 @@ async def gestioneNome(reader, writer):
                         risposta={ "stato":"ok", "servizio":servizio, "host":host, "port":port}
                     else:
                         risposta={ "stato":"errore", "messaggio":"servizio non esistente"}
+                else:
+                    risposta={"stato":"errore", "messaggio":"comando non esistente"}
 
 
 
