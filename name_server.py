@@ -23,6 +23,11 @@ async def gestioneNome(reader, writer):
                 if data.get("cmd")== "lookup":
                     servizio=data.get("servizio")
 
+                    if servizio in SERVIZI:
+                        host, port = SERVIZI[servizio]
+                        risposta={ "stato":"ok", "servizio":servizio, "host":host, "port":port}
+
+
 
 
 
