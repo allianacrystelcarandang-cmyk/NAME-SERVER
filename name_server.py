@@ -26,6 +26,8 @@ async def gestioneNome(reader, writer):
                     if servizio in SERVIZI:
                         host, port = SERVIZI[servizio]
                         risposta={ "stato":"ok", "servizio":servizio, "host":host, "port":port}
+                    else:
+                        risposta={ "stato":"errore", "messaggio":"servizio non esistente"}
 
 
 
