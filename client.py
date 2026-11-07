@@ -10,3 +10,23 @@ async def richiestaNome(nomeServizio):
     writer.write((json.dumps(richiesta)+"\n").encode())
     await writer.drain()
 
+    risposta=await reader.readline()
+    rispostaJ=json.loads(risposta.decode())
+    writer.close()
+    await writer.wait_closed()
+    return rispostaJ
+
+async def connessione(host,port,messaggio):
+    reader, writer = await asyncio.open_connection(host,port)
+    writer.write((json.dumps(messaggio)+"\n").encode())
+    await writer.drain()
+    risposta=await reader.readline()
+    rispostaJ=json.loads(risposta.decode())
+    writer.close()
+    await writer.wait_closed()
+    return rispostaJ
+
+
+
+
+
