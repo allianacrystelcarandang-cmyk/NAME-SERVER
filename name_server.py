@@ -62,6 +62,18 @@ async def gestioneTempo(reader, writer):
          writer.close()
          await writer.wait_closed()
 
+#gestione echo
+async def gestioneEcho(reader, writer):
+    try:
+        while True:
+            line = await reader.readline()
+            if not line:
+                break
+            try:
+                data = json.loads(line.decode())
+                if data.get("cmd") == "echo" and "text" in data:
+                    testo=data.get("text")
+                    risposta={ "stato":"ok", "text":testo}
 
 
 
