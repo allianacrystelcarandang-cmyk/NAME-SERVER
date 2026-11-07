@@ -27,6 +27,23 @@ async def connessione(host,port,messaggio):
     return rispostaJ
 
 async def main():
+    informaazioniServizio = await richiestaNome("time")
+    print(informaazioniServizio)
+
+    if informaazioniServizio.get("stato") == "ok":  # se il servizio esiste guardi l'host e la porta
+        host = informaazioniServizio.get("host")
+        port = informaazioniServizio.get("port")
+
+        messaggioTempo = {"cmd": "time"}
+
+        oraAdesso = await connessione(host, port, messaggioTempo)
+        print(oraAdesso)
+    else:
+        messaggioTempo = ("errore")
+
+
+if __name__ == "__main__":
+    asyncio.run(main())
 
 
 
