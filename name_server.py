@@ -76,6 +76,8 @@ async def gestioneEcho(reader, writer):
                     risposta={ "stato":"ok", "text":testo}
                 else:
                     risposta={"stato":"errore", "messaggio":"comando non esistente"}
+            except (json.decoder.JSONDecodeError, UnicodeDecodeError):
+                risposta={"stato": "errore", "messaggio":"json non valido"}
 
 
 
