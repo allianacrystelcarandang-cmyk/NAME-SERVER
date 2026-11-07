@@ -83,6 +83,29 @@ async def gestioneEcho(reader, writer):
         writer.close()
         await writer.wait_closed()
 
+async def main():
+    server_name= await asyncio.start_server(gestioneNome,HOST,6000)
+    server_time= await asyncio.start_server(gestioneTempo,HOST,6001)
+    server_echo = await asyncio.start_server(gestioneEcho,HOST,6002)
+
+    print("name server iniziato sulla porta 6000")
+    print("time server iniziato sulla porta 6001")
+    print("echo server iniziato sulla porta 6002")
+    async with server_name, server_time, server_echo:
+        await asyncio.gather(
+            server_name.serve_forever(),
+            server_echo.serve_forever(),
+            server_time.serve_forever(),
+        )
+
+if __name__ == "__main__":
+    try:
+        asyncio.run(main())
+    except KeyboardInterrupt:
+        print("-- server spento --")
+
+
+
 
 
 
