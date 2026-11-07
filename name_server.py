@@ -33,6 +33,11 @@ async def gestioneNome(reader, writer):
 
             except (json.decoder.JSONDecodeError,UnicodeDecodeError):
                 risposta={"stato":"errore", "messaggio":"json non valido"}
+                await reply(writer,risposta)
+    finally:
+        writer.close()
+        await writer.wait_closed()
+
 
 
 
