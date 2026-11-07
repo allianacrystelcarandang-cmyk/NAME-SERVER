@@ -38,6 +38,12 @@ async def gestioneNome(reader, writer):
         writer.close()
         await writer.wait_closed()
 
+#gestione del tempo
+async def gestioneTempo(reader, writer):
+    try:
+        while True:
+            line = await reader.readline()
+
 
 
 
