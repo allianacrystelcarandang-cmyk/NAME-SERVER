@@ -2,16 +2,25 @@ import asyncio
 import json
 from datetime import datetime
 
+#BRAINSTORMING
+#name server --> tiene elenco dei servizi che ho
+#time server --> tiene il tempo e l'orario
+#echo server --> manda il testo ricevuto al client
+
+
 HOST = '127.0.0.1'
 SERVIZI={"time":(HOST,6001),"echo": (HOST,6002)}
 
 #funzione per la risposta
+#riceve i dati e li trasforma i una stringa json e poi li invia al client in byte
 async def reply(writer,data):
-    payload = json.loads(data)+"\n"
+    payload = json.dumps(data)+"\n" #trasformo un dizionario in una str
     writer.write(payload.encode())
-    await writer.drain()
+    await writer.drain() #aspetto che il buffer sia vuoto
 
 #funzione per la gestione del nome
+#controlla se il servizio richiesto esiste e restituisce l'ip e la porta del servizio
+#senò stampa errore
 async def gestioneNome(reader, writer):
     try:
         while True:
@@ -39,6 +48,9 @@ async def gestioneNome(reader, writer):
         await writer.wait_closed()
 
 #gestione del tempo
+#fa la stessa cosa di quello di prima ma gestisce le richieste di orario
+#restituisce l'orario dformattattato
+
 async def gestioneTempo(reader, writer):
     try:
         while True:
@@ -78,7 +90,7 @@ async def gestioneEcho(reader, writer):
                     risposta={"stato":"errore", "messaggio":"comando non esistente"}
             except (json.decoder.JSONDecodeError, UnicodeDecodeError):
                 risposta={"stato": "errore", "messaggio":"json non valido"}
-
+            await reply(writer, risposta)
     finally:
         writer.close()
         await writer.wait_closed()
