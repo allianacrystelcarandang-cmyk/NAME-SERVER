@@ -74,6 +74,8 @@ async def gestioneEcho(reader, writer):
                 if data.get("cmd") == "echo" and "text" in data:
                     testo=data.get("text")
                     risposta={ "stato":"ok", "text":testo}
+                else:
+                    risposta={"stato":"errore", "messaggio":"comando non esistente"}
 
 
 
