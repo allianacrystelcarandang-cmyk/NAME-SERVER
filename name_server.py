@@ -79,6 +79,9 @@ async def gestioneEcho(reader, writer):
             except (json.decoder.JSONDecodeError, UnicodeDecodeError):
                 risposta={"stato": "errore", "messaggio":"json non valido"}
 
+    finally:
+        writer.close()
+        await writer.wait_closed()
 
 
 
