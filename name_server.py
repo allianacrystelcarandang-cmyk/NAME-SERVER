@@ -11,3 +11,12 @@ async def reply(writer,data):
     writer.write(payload.encode())
     await writer.drain()
 
+#funzione per la gestione del nome
+async def gestioneNome(reader, writer):
+    try:
+        while True:
+            line = await reader.readline()
+            if not line:
+                break
+
+
