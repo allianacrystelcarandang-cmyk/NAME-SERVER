@@ -43,6 +43,32 @@ async def gestioneTempo(reader, writer):
     try:
         while True:
             line = await reader.readline()
+            if not line:
+                break
+
+            try:
+                data = json.loads(line.decode())
+                if data.get("cmd")== "time":
+                    ora=datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                    risposta={ "stato":"ok", "time":ora}
+                else:
+                    risposta = {"stato": "errore", "messaggio": "comando non esistente"}
+
+            except (json.decoder.JSONDecodeError, UnicodeDecodeError):
+                risposta = {"stato": "errore", "messaggio": "json non valido"}
+                await reply(writer, risposta)
+
+    finally:
+         writer.close()
+         await writer.wait_closed()
+
+
+
+
+
+
+
+
 
 
 
